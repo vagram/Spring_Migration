@@ -15,33 +15,36 @@ public class CarServiceImpl implements CarService{
 
     @Override
     public List<Car> getAll() {
-        log.info("List of Cars");
-        return carRepository.findAll();
+        List<Car> carList = carRepository.findAll();
+        log.info("in method getAll() find " + carList.size() + " number of cars");
+        return carList;
     }
 
     @Override
     public Car getCarById(Integer id) {
         Car car = carRepository.findById(id).orElse(null);
-        log.info("Car with id " + id);
         if (car == null) {
+            log.warn("Car with id " + id + " hasn't been found");
             throw  new RuntimeException("No Car with such ID: " + id);
         }
+        log.info("In method getCarById car " + car + " with id " + id + " has been found");
         return car;
     }
 
     @Override
     public void updateCar(Car car) {
-        log.info("Car  " + car + "  Has been Updated" );
         carRepository.save(car);
+        log.info("Car  " + car + "  Has been Updated" );
     }
 
     @Override
     public Car findByLicplate(String licplate) {
         Car car = carRepository.findByLicplate(licplate);
-        log.info("Car with licplate  " + licplate + " Has been found");
         if (car == null){
+            log.warn("The car with licplate" + licplate + "hasn't been found");
             throw new RuntimeException("No Car with a licplate: " + licplate);
         }
+        log.info("Car " + car + " with licplate  " + licplate + " Has been found");
         return car;
     }
 }

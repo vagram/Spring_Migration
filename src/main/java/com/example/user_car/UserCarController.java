@@ -23,12 +23,10 @@ public class UserCarController {
 
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Integer id) throws Exception {
-        User user = userCarService.getUserById(id);
-        if (user == null) {
-            throw  new RuntimeException("No User with such ID: " + id);
-        }
-        return user;
+    public User getUserById(@PathVariable Integer id) {
+        return userCarService.getUserById(id);
+
+
     }
 
 

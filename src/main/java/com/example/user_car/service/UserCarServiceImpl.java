@@ -25,20 +25,21 @@ public class UserCarServiceImpl implements UserCarService{
     @Transactional
     public List<User> getAllUsers() {
         List<User> userList = userRepository.findAll();
+        log.info("In method getAllUsers found " +userList.size() + " users");
         return userList;
     }
 
 
     @Override
     @Transactional
-    public User getUserById(Integer id)  {
-
-            User user = userRepository.findById(id).orElse(null);
-            log.info("User with id  " + id);
-            if (user == null) {
-                throw new RuntimeException("No User with such ID: " + id);
-            }
-            return user;
+    public User getUserById(Integer id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            log.warn("No User with such ID: " + id);
+            throw new RuntimeException("No User with such ID: " + id);
+        }
+        log.info("User " + user + " with id  " + id + " found");
+        return user;
     }
 
     @Override
